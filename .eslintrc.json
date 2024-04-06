@@ -1,0 +1,107 @@
+{
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:prettier/recommended"
+	],
+	"ignorePatterns": [
+		"package.json",
+		"package-lock.json"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 2020,
+		"sourceType": "module",
+		"project": "./tsconfig.json",
+		"extraFileExtensions": [
+			".json"
+		]
+	},
+	"plugins": [
+		"import",
+		"no-relative-import-paths",
+		"simple-import-sort"
+	],
+	"rules": {
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/explicit-module-boundary-types": "off",
+		"@typescript-eslint/no-empty-function": "off",
+		"@typescript-eslint/no-unused-vars": [
+			"error",
+			{
+				"argsIgnorePattern": "^_",
+				"caughtErrorsIgnorePattern": "^_",
+				"varsIgnorePattern": "^_"
+			}
+		],
+		"@typescript-eslint/consistent-type-imports": [
+			"error",
+			{
+				"prefer": "type-imports",
+				"fixStyle": "inline-type-imports"
+			}
+		],
+		"comma-dangle": [
+			"error",
+			"always-multiline"
+		],
+		"simple-import-sort/imports": "error",
+		"simple-import-sort/exports": "error"
+	},
+	"overrides": [
+		{
+			"files": [
+				"*.config.*",
+				"*.json"
+			],
+			"env": {
+				"node": true
+			},
+			"parser": "@typescript-eslint/parser",
+			"parserOptions": {
+				"project": "./tsconfig.node.json"
+			},
+			"rules": {
+				"comma-dangle": "off"
+			}
+		},
+		{
+			"files": [
+				"src/**"
+			],
+			"env": {
+				"browser": true
+			},
+			"globals": {
+				"chrome": true
+			},
+			"rules": {
+				"no-console": "error",
+				"import/no-cycle": ["error", { "ignoreExternal": true }],
+				"import/no-default-export": "error",
+				"no-relative-import-paths/no-relative-import-paths": [
+					"warn",
+					{
+						"allowSameFolder": false
+					}
+				]
+			}
+		},
+		{
+			"files": [
+				"src/**/*.d.ts"
+			],
+			"rules": {
+				"import/no-default-export": "off"
+			}
+		},
+		{
+			"files": [
+				"src/utility/console-log.ts"
+			],
+			"rules": {
+				"no-console": "off"
+			}
+		}
+	]
+}
