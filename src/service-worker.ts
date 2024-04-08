@@ -10,6 +10,8 @@ const id = chrome.contextMenus.create(
 	{
 		title: 'Markdown paste',
 		contexts: ['editable'],
+		// http(s) only -- excludes chrome:// URLs where it doesn't work
+		documentUrlPatterns: ['https://*/*', 'http://*/* '],
 		id: 'markdownPaste',
 	},
 	() => {
