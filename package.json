@@ -10,8 +10,7 @@
     "dev": "vite",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint 'src/**/*.{js,jsx,ts,tsx}' --fix",
-    "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx,html,json}'",
-    "release": "rimraf ./release && npm run build && cp -r ./dist ./release"
+    "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx,html,json}'"
   },
   "author": "Andrew Fong <id@andrewfong.com>",
   "license": "MIT",
