@@ -4,16 +4,16 @@
   "description": "Chrome extension to paste as markdown",
   "type": "module",
   "scripts": {
-		"build": "vite build",
-		"build-all": "vite build",
-		"check": "tsc --noEmit --project ./tsconfig.json",
-		"clean": "rimraf ./dist",
-		"dev": "vite",
-		"lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-		"lint:fix": "eslint 'src/**/*.{js,jsx,ts,tsx}' --fix",
-		"prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx,html,json}'",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
+    "build": "vite build",
+    "build-all": "vite build",
+    "check": "tsc --noEmit --project ./tsconfig.json",
+    "clean": "rimraf ./dist",
+    "dev": "vite",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "eslint 'src/**/*.{js,jsx,ts,tsx}' --fix",
+    "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx,html,json}'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "author": "Andrew Fong <id@andrewfong.com>",
   "license": "MIT",
   "devDependencies": {
@@ -35,6 +35,9 @@
     "vite": "^5.2.4"
   },
   "dependencies": {
-    "tslib": "^2.6.2"
+    "@types/turndown": "^5.0.4",
+    "tslib": "^2.6.2",
+    "turndown": "^7.1.3",
+    "turndown-plugin-gfm": "^1.0.2"
   }
 }

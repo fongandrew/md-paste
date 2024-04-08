@@ -1,4 +1,9 @@
 import { registerHandlerForTab, ToTabMessageType } from 'src/bridge';
+import TurndownService from 'turndown';
+import { gfm } from 'turndown-plugin-gfm';
+
+const turndownService = new TurndownService();
+turndownService.use(gfm);
 
 // Callback for paste handler -- this doesn't necessarily
 // work if code is spread across multiple functions, so
@@ -19,6 +24,7 @@ async function doPaste() {
 		else if (item.types?.includes('text/html')) {
 			const blob = await item.getType('text/html');
 			textToPaste = await blob.text();
+			textToPaste = turndownService.turndown(textToPaste);
 		}
 
 		// Default to plain text
@@ -27,6 +33,13 @@ async function doPaste() {
 			textToPaste = await blob.text();
 		}
 	}
+
+	// document.execCommand is deprecated but this is still the
+	// most reliable way to insert content with a history
+	// event to enable undo-ing the action. If we need to
+	// move to something else, take a look at the status
+	// of Input Events Level 2 adoption:
+	// https://www.w3.org/TR/input-events-2/
 	document.execCommand('insertText', false, textToPaste);
 }
 
