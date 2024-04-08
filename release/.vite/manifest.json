@@ -1,0 +1,34 @@
+{
+  "../../../../@crx/manifest": {
+    "file": "assets/crx-manifest.js-CkSL9yLC.js",
+    "name": "crx-manifest.js",
+    "src": "../../../../@crx/manifest",
+    "isEntry": true
+  },
+  "_bridge-Bwnd3sev.js": {
+    "file": "assets/bridge-Bwnd3sev.js",
+    "name": "bridge"
+  },
+  "content-script.ts-loader.js": {
+    "file": "assets/content-script.ts-loader-Da2R5BZc.js",
+    "src": "content-script.ts-loader.js"
+  },
+  "src/content-script.ts": {
+    "file": "assets/content-script.ts-Dg34B553.js",
+    "name": "content-script.ts",
+    "src": "src/content-script.ts",
+    "isEntry": true,
+    "imports": [
+      "_bridge-Bwnd3sev.js"
+    ]
+  },
+  "src/service-worker.ts": {
+    "file": "assets/service-worker.ts-Cd6uLcYO.js",
+    "name": "service-worker.ts",
+    "src": "src/service-worker.ts",
+    "isEntry": true,
+    "imports": [
+      "_bridge-Bwnd3sev.js"
+    ]
+  }
+}
