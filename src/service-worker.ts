@@ -1,3 +1,5 @@
+import { sendToTab, ToTabMessageType } from 'src/bridge';
+import contentScript from 'src/content-script?script';
 import { warn } from 'src/utility/console-log';
 
 // Chrome example says to place this in chrome.runtime.onInstalled
@@ -19,42 +21,25 @@ const id = chrome.contextMenus.create(
 	},
 );
 
-// Callback for paste handler -- this doesn't necessarily
-// work if code is spread across multiple functions, so
-// we're inlining all the logic here.
-async function doPaste() {
-	let textToPaste = '';
-	const clipboardItems = await navigator.clipboard.read();
-	if (clipboardItems.length) {
-		const item = clipboardItems[0];
-
-		// Prefer explicit markdown
-		if (item.types?.includes('text/markdown')) {
-			const blob = await item.getType('text/markdown');
-			textToPaste = await blob.text();
-		}
-
-		// Convert HTML to markdown
-		else if (item.types?.includes('text/html')) {
-			const blob = await item.getType('text/html');
-			textToPaste = await blob.text();
-		}
-
-		// Default to plain text
-		else if (item.types?.includes('text/plain')) {
-			const blob = await item.getType('text/html');
-			textToPaste = await blob.text();
-		}
-	}
-	document.execCommand('insertText', false, textToPaste);
-}
-
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 	if (info.menuItemId !== id) return;
 	const tabId = tab?.id;
 	if (!tabId) return;
-	chrome.scripting.executeScript({
-		target: { tabId },
-		func: doPaste,
+
+	const exists = await sendToTab(tabId, {
+		type: ToTabMessageType.EXISTS,
+	}).catch(() => {
+		return false;
 	});
+
+	if (exists) {
+		// If script already loaded, just send a message to paste
+		await sendToTab(tabId, { type: ToTabMessageType.PASTE });
+	} else {
+		// Else load script, which will paste on init
+		await chrome.scripting.executeScript({
+			target: { tabId },
+			files: [contentScript],
+		});
+	}
 });
